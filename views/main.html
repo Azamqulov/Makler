@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Broker - Ko'chmas Mulk Platformasi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --dark-color: #1a1a1a;
+            --light-color: #ecf0f1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 25px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Landing Page */
+        .hero {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="50" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 1s ease-out 0.6s both;
+        }
+
+        .btn-hero {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: white;
+            padding: 60px 0;
+            margin-top: -50px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .search-form {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-search {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Listings Grid */
+        .listings-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .listing-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .listing-image {
+            width: 100%;
+            height: 250px;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .listing-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .listing-price {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .listing-type {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .listing-content {
+            padding: 25px;
+        }
+
+        .listing-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .listing-location {
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .listing-features {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .listing-broker {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .broker-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .broker-info h4 {
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+
+        .broker-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .contact-btn {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        /* Auth Forms */
+        .auth-section {
+            display: none;
+            padding: 100px 0;
+            background: var(--light-color);
+        }
+
+        .auth-form {
+            max-width: 450px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .role-option {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-option.selected {
+            border-color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Add Property Form */
+        .add-property-form {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-grid-full {
+            grid-column: 1 / -1;
+        }
+
+        .image-upload {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload:hover {
+            border-color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        /* Responsive */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(102, 126, 234, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Success Messages */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-home"></i>
+                Elite Broker
+            </div>
+            
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#" class="nav-link" onclick="showSection('home')">Bosh sahifa</a></li>
+                    <li><a href="#" class="nav-link" onclick="showSection('listings')">E'lonlar</a></li>
+                    <li><a href="#" class="nav-link">Xizmatlar</a></li>
+                    <li><a href="#" class="nav-link">Bog'lanish</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons" id="authButtons">
+                <a href="#" class="btn btn-outline" onclick="showAuth('login')">
+                    <i class="fas fa-sign-in-alt"></i> Kirish
+                </a>
+                <a href="#" class="btn btn-primary" onclick="showAuth('register')">
+                    <i class="fas fa-user-plus"></i> Ro'yxatdan o'tish
+                </a>
+            </div>
+            
+            <div class="auth-buttons" id="userMenu" style="display: none;">
+                <span id="userName" style="color: white; margin-right: 15px;"></span>
+                <a href="#" class="btn btn-primary" onclick="showDashboard()">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a href="#" class="btn btn-outline" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Chiqish
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="homeSection" class="section-content">
+            <!-- Hero -->
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Eng Yaxshi Ko'chmas Mulkni Toping</h1>
+                        <p>O'zbekistondagi eng katta ko'chmas mulk platformasi. Minglab e'lonlar, professional maklerlar va qulay qidiruv tizimi.</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn btn-primary btn-hero" onclick="scrollToSearch()">
+                                <i class="fas fa-search"></i> Qidirishni Boshlash
+                            </a>
+                            <a href="#" class="btn btn-outline btn-hero" onclick="showAuth('register')">
+                                <i class="fas fa-briefcase"></i> Makler Bo'lish
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section" id="searchSection">
+                <div class="container">
+                    <form class="search-form" onsubmit="searchProperties(event)">
+                        <div class="form-group">
+                            <label for="searchType">Tur</label>
+                            <select class="form-control" id="searchType">
+                                <option value="">Hammasi</option>
+                                <option value="sotuv">Sotuv</option>
+                                <option value="ijara">Ijara</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="searchLocation">Joylashuv</label>
+                            <input type="text" class="form-control" id="searchLocation" placeholder="Shahar yoki mahalla">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchMinPrice">Min Narx</label>
+                            <input type="number" class="form-control" id="searchMinPrice" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchMaxPrice">Max Narx</label>
+                            <input type="number" class="form-control" id="searchMaxPrice" placeholder="Cheklov yo'q">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchRooms">Xonalar soni</label>
+                            <select class="form-control" id="searchRooms">
+                                <option value="">Hammasi</option>
+                                <option value="1">1 xona</option>
+                                <option value="2">2 xona</option>
+                                <option value="3">3 xona</option>
+                                <option value="4">4+ xona</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-search">
+                                <i class="fas fa-search"></i> Qidirish
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Listings Section -->
+            <div class="listings-section">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Mashhur E'lonlar</h2>
+                        <p>Eng so'nggi va mashhur ko'chmas mulk e'lonlari</p>
+                    </div>
+                    <div class="listings-grid" id="listingsGrid">
+                        <!-- Listings will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auth Section -->
+        <section id="authSection" class="auth-section section-content">
+            <div class="container">
+                <div class="auth-form" id="authForm">
+                    <h2 id="authTitle">Kirish</h2>
+                    <div class="alert alert-success" id="successAlert"></div>
+                    <div class="alert alert-error" id="errorAlert"></div>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Parol</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
+                            <i class="fas fa-sign-in-alt"></i> Kirish
+                        </button>
+                        <p style="text-align: center;">
+                            Akkauntingiz yo'qmi? 
+                            <a href="#" onclick="showAuth('register')" style="color: var(--secondary-color);">Ro'yxatdan o'ting</a>
+                        </p>
+                    </form>
+
+                    <form id="registerForm" style="display: none;">
+                        <div class="role-selector">
+                            <div class="role-option" onclick="selectRole('user')">
+                                <i class="fas fa-user fa-2x" style="color: var(--secondary-color); margin-bottom: 10px;"></i>
+                                <h4>Foydalanuvchi</h4>
+                                <p style="font-size: 12px; color: #666;">E'lonlarni ko'rish va qidirish</p>
+                            </div>
+                            <div class="role-option" onclick="selectRole('broker')">
+                                <i class="fas fa-briefcase fa-2x" style="color: var(--secondary-color); margin-bottom: 10px;"></i>
+                                <h4>Makler</h4>
+                                <p style="font-size: 12px; color: #666;">E'lon joylashtirish va boshqarish</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="userRole" value="">
+                        
+                        <div class="form-group">
+                            <label for="registerName">To'liq ism</label>
+                            <input type="text" class="form-control" id="registerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPhone">Telefon</label>
+                            <input type="tel" class="form-control" id="registerPhone" required>
+                        </div>
+                        <div class="form-group" id="companyGroup" style="display: none;">
+                            <label for="registerCompany">Kompaniya nomi</label>
+                            <input type="text" class="form-control" id="registerCompany">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Parol</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Parolni tasdiqlang</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
+                            <i class="fas fa-user-plus"></i> Ro'yxatdan o'tish
+                        </button>
+                        <p style="text-align: center;">
+                            Allaqachon akkauntingiz bormi? 
+                            <a href="#" onclick="showAuth('login')" style="color: var(--secondary-color);">Kiring</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboardSection" class="dashboard section-content">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Boshqaruv Paneli</h1>
+                    <button class="btn btn-primary" onclick="showAddPropertyForm()" id="addPropertyBtn" style="display: none;">
+                        <i class="fas fa-plus"></i> Yangi E'lon
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="dashboard-stats" id="dashboardStats">
+                    <!-- Stats will be populated by JavaScript -->
+                </div>
+
+                <!-- Add Property Form (for brokers) -->
+                <div id="addPropertySection" class="add-property-form" style="display: none;">
+                    <h2 style="margin-bottom: 30px; color: var(--primary-color);">
+                        <i class="fas fa-home"></i> Yangi E'lon Qo'shish
+                    </h2>
+                    <form id="addPropertyForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="propertyTitle">Sarlavha</label>
+                                <input type="text" class="form-control" id="propertyTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyType">Turi</label>
+                                <select class="form-control" id="propertyType" required>
+                                    <option value="">Tanlang</option>
+                                    <option value="sotuv">Sotuv</option>
+                                    <option value="ijara">Ijara</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyPrice">Narxi (USD)</label>
+                                <input type="number" class="form-control" id="propertyPrice" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyLocation">Manzil</label>
+                                <input type="text" class="form-control" id="propertyLocation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyRooms">Xonalar soni</label>
+                                <select class="form-control" id="propertyRooms" required>
+                                    <option value="">Tanlang</option>
+                                    <option value="1">1 xona</option>
+                                    <option value="2">2 xona</option>
+                                    <option value="3">3 xona</option>
+                                    <option value="4">4 xona</option>
+                                    <option value="5">5+ xona</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyArea">Maydoni (m²)</label>
+                                <input type="number" class="form-control" id="propertyArea" required>
+                            </div>
+                            <div class="form-group form-grid-full">
+                                <label for="propertyDescription">Ta'rif</label>
+                                <textarea class="form-control" id="propertyDescription" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group form-grid-full">
+                                <label>Suratlar</label>
+                                <div class="image-upload" onclick="document.getElementById('propertyImages').click()">
+                                    <i class="fas fa-cloud-upload-alt fa-3x" style="color: #ccc; margin-bottom: 15px;"></i>
+                                    <p>Suratlarni yuklash uchun bosing yoki bu yerga tashlang</p>
+                                    <input type="file" id="propertyImages" multiple accept="image/*" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button type="button" class="btn btn-outline" onclick="hideAddPropertyForm()" style="margin-right: 15px;">
+                                Bekor qilish
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> E'lonni Saqlash
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- User Properties/Favorites -->
+                <div id="userPropertiesSection">
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color);" id="propertiesSectionTitle">Mening E'lonlarim</h3>
+                    <div class="listings-grid" id="userPropertiesGrid">
+                        <!-- User properties will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            <h2 style="margin-bottom: 20px; color: var(--primary-color);">Makler bilan bog'lanish</h2>
+            <div id="brokerInfo" style="margin-bottom: 20px;">
+                <!-- Broker info will be populated here -->
+            </div>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Ismingiz</label>
+                    <input type="text" class="form-control" id="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Telefon</label>
+                    <input type="tel" class="form-control" id="contactPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" class="form-control" id="contactEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Xabar</label>
+                    <textarea class="form-control" id="contactMessage" rows="4" placeholder="E'lon haqida savolingizni yozing..." required></textarea>
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-outline" onclick="closeContactModal()" style="margin-right: 15px;">
+                        Bekor qilish
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Xabar Yuborish
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let properties = [];
+        let currentSection = 'home';
+
+        // Sample data
+        const sampleProperties = [
+            {
+                id: 1,
+                title: "Lux 3-xonali kvartira",
+                type: "sotuv",
+                price: 85000,
+                location: "Toshkent, Yunusobod",
+                rooms: 3,
+                area: 95,
+                description: "Yangi qurilgan binoda zamonaviy ta'mirlangan kvartira. Barcha qulayliklar mavjud.",
+                broker: {
+                    name: "Ahmad Karimov",
+                    company: "Elite Real Estate",
+                    phone: "+998901234567",
+                    email: "ahmad@elite.uz"
+                },
+                images: ["https://via.placeholder.com/400x250/667eea/ffffff?text=Lux+Kvartira"],
+                createdAt: new Date('2024-01-15')
+            },
+            {
+                id: 2,
+                title: "Uy-joy ijaraga",
+                type: "ijara",
+                price: 800,
+                location: "Toshkent, Mirzo-Ulugbek",
+                rooms: 2,
+                area: 65,
+                description: "Shahar markazida qulay joylashgan ikki xonali kvartira ijaraga beriladi.",
+                broker: {
+                    name: "Dilafruz Nazarova",
+                    company: "Home Broker",
+                    phone: "+998907654321",
+                    email: "dilafruz@home.uz"
+                },
+                images: ["https://via.placeholder.com/400x250/764ba2/ffffff?text=Ijara+Uy"],
+                createdAt: new Date('2024-01-10')
+            },
+            {
+                id: 3,
+                title: "Tijorat binosi",
+                type: "sotuv",
+                price: 250000,
+                location: "Samarqand, Markaz",
+                rooms: 0,
+                area: 300,
+                description: "Shahar markazida joylashgan tijorat binosi. Biznes uchun ideal.",
+                broker: {
+                    name: "Bobur Toshmatov",
+                    company: "Commercial Properties",
+                    phone: "+998909876543",
+                    email: "bobur@commercial.uz"
+                },
+                images: ["https://via.placeholder.com/400x250/27ae60/ffffff?text=Tijorat"],
+                createdAt: new Date('2024-01-05')
+            }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            properties = [...sampleProperties];
+            checkAuthStatus();
+            displayProperties();
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleLogin();
+            });
+
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleRegister();
+            });
+
+            // Add property form
+            document.getElementById('addPropertyForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleAddProperty();
+            });
+
+            // Contact form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleContactSubmit();
+            });
+
+            // Search form
+            document.getElementById('searchForm')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleSearch();
+            });
+        }
+
+        // Authentication functions
+        function checkAuthStatus() {
+            const savedUser = sessionStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateAuthUI();
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simple validation (in real app, this would be server-side)
+            if (email && password) {
+                // Simulate successful login
+                currentUser = {
+                    id: Date.now(),
+                    name: email.split('@')[0],
+                    email: email,
+                    role: email.includes('broker') ? 'broker' : 'user'
+                };
+                
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAuthUI();
+                showAlert('success', 'Muvaffaqiyatli kirildi!');
+                setTimeout(() => {
+                    showDashboard();
+                }, 1500);
+            } else {
+                showAlert('error', 'Email va parolni to\'ldiring');
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const role = document.getElementById('userRole').value;
+            const company = document.getElementById('registerCompany').value;
+
+            if (!role) {
+                showAlert('error', 'Iltimos, rolni tanlang');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert('error', 'Parollar mos kelmadi');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('error', 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak');
+                return;
+            }
+
+            // Create new user
+            currentUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                phone: phone,
+                role: role,
+                company: role === 'broker' ? company : null
+            };
+
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+            showAlert('success', 'Muvaffaqiyatli ro\'yxatdan o\'tildi!');
+            setTimeout(() => {
+                showDashboard();
+            }, 1500);
+        }
+
+        function logout() {
+            currentUser = null;
+            sessionStorage.removeItem('currentUser');
+            updateAuthUI();
+            showSection('home');
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            const userName = document.getElementById('userName');
+
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'flex';
+                userName.textContent = currentUser.name;
+            } else {
+                authButtons.style.display = 'flex';
+                userMenu.style.display = 'none';
+            }
+        }
+
+        // Navigation functions
+        function showSection(section) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(s => s.style.display = 'none');
+
+            // Show selected section
+            document.getElementById(section + 'Section').style.display = 'block';
+            currentSection = section;
+
+            if (section === 'home') {
+                displayProperties();
+            }
+        }
+
+        function showAuth(type) {
+            const authForm = document.getElementById('authForm');
+            const authTitle = document.getElementById('authTitle');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (type === 'login') {
+                authTitle.textContent = 'Kirish';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                authTitle.textContent = 'Ro\'yxatdan o\'tish';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+
+            showSection('auth');
+        }
+
+        function showDashboard() {
+            if (!currentUser) {
+                showAuth('login');
+                return;
+            }
+
+            showSection('dashboard');
+            updateDashboardContent();
+        }
+
+        // Dashboard functions
+        function updateDashboardContent() {
+            const addPropertyBtn = document.getElementById('addPropertyBtn');
+            const propertiesSectionTitle = document.getElementById('propertiesSectionTitle');
+            const dashboardStats = document.getElementById('dashboardStats');
+
+            if (currentUser.role === 'broker') {
+                addPropertyBtn.style.display = 'inline-flex';
+                propertiesSectionTitle.textContent = 'Mening E\'lonlarim';
+                
+                // Broker stats
+                const userProperties = properties.filter(p => 
+                    p.broker.email === currentUser.email
+                );
+                const totalViews = userProperties.length * Math.floor(Math.random() * 100 + 50);
+                const totalContacts = Math.floor(totalViews * 0.1);
+
+                dashboardStats.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-number">${userProperties.length}</div>
+                        <div class="stat-label">E'lonlar soni</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${totalViews}</div>
+                        <div class="stat-label">Ko'rishlar soni</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${totalContacts}</div>
+                        <div class="stat-label">Murojaatlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${(userProperties.reduce((sum, p) => sum + p.price, 0)).toLocaleString()}</div>
+                        <div class="stat-label">Umumiy qiymat</div>
+                    </div>
+                `;
+                
+                displayUserProperties(userProperties);
+            } else {
+                addPropertyBtn.style.display = 'none';
+                propertiesSectionTitle.textContent = 'Saqlanganlar';
+                
+                // User stats
+                const favoriteProperties = getFavoriteProperties();
+                const recentSearches = 5; // Mock data
+
+                dashboardStats.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-number">${favoriteProperties.length}</div>
+                        <div class="stat-label">Saqlanganlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${recentSearches}</div>
+                        <div class="stat-label">So'nggi qidiruvlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${properties.length}</div>
+                        <div class="stat-label">Jami e'lonlar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Soat ichida yangi</div>
+                    </div>
+                `;
+                
+                displayUserProperties(favoriteProperties);
+            }
+        }
+
+        // Property functions
+        function displayProperties(filteredProperties = null) {
+            const listingsGrid = document.getElementById('listingsGrid');
+            const propertiesToShow = filteredProperties || properties;
+
+            listingsGrid.innerHTML = propertiesToShow.map(property => `
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="${property.images[0]}" alt="${property.title}" onerror="this.src='https://via.placeholder.com/400x250/667eea/ffffff?text=No+Image'">
+                        <div class="listing-price">${property.price.toLocaleString()}</div>
+                        <div class="listing-type">${property.type === 'sotuv' ? 'Sotuv' : 'Ijara'}</div>
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">${property.title}</h3>
+                        <div class="listing-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location}
+                        </div>
+                        <div class="listing-features">
+                            ${property.rooms > 0 ? `<div class="feature"><i class="fas fa-bed"></i> ${property.rooms} xona</div>` : ''}
+                            <div class="feature"><i class="fas fa-ruler-combined"></i> ${property.area} m²</div>
+                            <div class="feature"><i class="fas fa-calendar"></i> ${formatDate(property.createdAt)}</div>
+                        </div>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 20px;">${property.description.substring(0, 100)}...</p>
+                        <div class="listing-broker">
+                            <div class="broker-avatar">
+                                ${property.broker.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="broker-info">
+                                <h4>${property.broker.name}</h4>
+                                <p>${property.broker.company}</p>
+                            </div>
+                            <button class="contact-btn" onclick="openContactModal(${property.id})">
+                                <i class="fas fa-phone"></i> Bog'lanish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayUserProperties(userProperties) {
+            const userPropertiesGrid = document.getElementById('userPropertiesGrid');
+            
+            if (userProperties.length === 0) {
+                userPropertiesGrid.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fas fa-home fa-3x" style="margin-bottom: 20px; opacity: 0.3;"></i>
+                        <h3>Hech qanday e'lon topilmadi</h3>
+                        <p>${currentUser.role === 'broker' ? 'Birinchi e\'loningizni qo\'shing' : 'Yoqgan e\'lonlarni saqlang'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            userPropertiesGrid.innerHTML = userProperties.map(property => `
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="${property.images[0]}" alt="${property.title}">
+                        <div class="listing-price">${property.price.toLocaleString()}</div>
+                        <div class="listing-type">${property.type === 'sotuv' ? 'Sotuv' : 'Ijara'}</div>
+                        ${currentUser.role === 'broker' ? `
+                            <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%);">
+                                <button onclick="editProperty(${property.id})" style="background: rgba(0,0,0,0.7); color: white; border: none; padding: 5px 10px; border-radius: 15px; margin-right: 5px; cursor: pointer;">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteProperty(${property.id})" style="background: var(--accent-color); color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="listing-content">
+                        <h3 class="listing-title">${property.title}</h3>
+                        <div class="listing-location">
+                            <i class="fas fa-map-marker-alt"></i> ${property.location}
+                        </div>
+                        <div class="listing-features">
+                            ${property.rooms > 0 ? `<div class="feature"><i class="fas fa-bed"></i> ${property.rooms} xona</div>` : ''}
+                            <div class="feature"><i class="fas fa-ruler-combined"></i> ${property.area} m²</div>
+                            <div class="feature"><i class="fas fa-eye"></i> ${Math.floor(Math.random() * 100 + 10)} ko'rildi</div>
+                        </div>
+                        <p style="color: #666; font-size: 14px; margin-bottom: 20px;">${property.description.substring(0, 100)}...</p>
+                        ${currentUser.role === 'user' ? `
+                            <div style="display: flex; gap: 10px;">
+                                <button class="contact-btn" onclick="openContactModal(${property.id})" style="flex: 1;">
+                                    <i class="fas fa-phone"></i> Bog'lanish
+                                </button>
+                                <button onclick="removeFromFavorites(${property.id})" style="background: var(--accent-color); color: white; border: none; padding: 8px 15px; border-radius: 20px; font-size: 12px; cursor: pointer;">
+                                    <i class="fas fa-heart-broken"></i> O'chirish
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add property functions
+        function showAddPropertyForm() {
+            document.getElementById('addPropertySection').style.display = 'block';
+            document.getElementById('addPropertySection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideAddPropertyForm() {
+            document.getElementById('addPropertySection').style.display = 'none';
+            document.getElementById('addPropertyForm').reset();
+        }
+
+        function handleAddProperty() {
+            if (!currentUser || currentUser.role !== 'broker') {
+                showAlert('error', 'Faqat maklerlar e\'lon qo\'sha oladi');
+                return;
+            }
+
+            const title = document.getElementById('propertyTitle').value;
+            const type = document.getElementById('propertyType').value;
+            const price = parseFloat(document.getElementById('propertyPrice').value);
+            const location = document.getElementById('propertyLocation').value;
+            const rooms = parseInt(document.getElementById('propertyRooms').value);
+            const area = parseFloat(document.getElementById('propertyArea').value);
+            const description = document.getElementById('propertyDescription').value;
+
+            const newProperty = {
+                id: Date.now(),
+                title: title,
+                type: type,
+                price: price,
+                location: location,
+                rooms: rooms,
+                area: area,
+                description: description,
+                broker: {
+                    name: currentUser.name,
+                    company: currentUser.company || 'Independent Broker',
+                    phone: currentUser.phone || '+998901234567',
+                    email: currentUser.email
+                },
+                images: ['https://via.placeholder.com/400x250/667eea/ffffff?text=New+Property'],
+                createdAt: new Date()
+            };
+
+            properties.unshift(newProperty);
+            hideAddPropertyForm();
+            showAlert('success', 'E\'lon muvaffaqiyatli qo\'shildi!');
+            updateDashboardContent();
+            
+            // Auto scroll to properties section
+            setTimeout(() => {
+                document.getElementById('userPropertiesSection').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+        }
+
+        // Contact functions
+        function openContactModal(propertyId) {
+            const property = properties.find(p => p.id === propertyId);
+            if (!property) return;
+
+            const modal = document.getElementById('contactModal');
+            const brokerInfo = document.getElementById('brokerInfo');
+
+            brokerInfo.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 15px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <div class="broker-avatar" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                        ${property.broker.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <h3 style="color: var(--primary-color); margin-bottom: 5px;">${property.broker.name}</h3>
+                        <p style="color: #666; margin-bottom: 5px;">${property.broker.company}</p>
+                        <p style="color: #666; font-size: 14px;">
+                            <i class="fas fa-phone"></i> ${property.broker.phone} &nbsp;
+                            <i class="fas fa-envelope"></i> ${property.broker.email}
+                        </p>
+                    </div>
+                </div>
+                <h4 style="color: var(--primary-color); margin: 15px 0 10px 0;">${property.title}</h4>
+                <p style="color: #666; font-size: 14px;">${property.location} • ${property.price.toLocaleString()}</p>
+            `;
+
+            // Pre-fill contact form if user is logged in
+            if (currentUser) {
+                document.getElementById('contactName').value = currentUser.name || '';
+                document.getElementById('contactPhone').value = currentUser.phone || '';
+                document.getElementById('contactEmail').value = currentUser.email || '';
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.getElementById('contactForm').reset();
+        }
+
+        function handleContactSubmit() {
+            const name = document.getElementById('contactName').value;
+            const phone = document.getElementById('contactPhone').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+
+            // In a real application, this would send the contact information to the server
+            console.log('Contact submission:', { name, phone, email, message });
+            
+            closeContactModal();
+            showAlert('success', 'Xabaringiz muvaffaqiyatli yuborildi! Makler tez orada siz bilan bog\'lanadi.');
+        }
+
+        // Search functions
+        function searchProperties(event) {
+            event.preventDefault();
+            
+            const type = document.getElementById('searchType').value;
+            const location = document.getElementById('searchLocation').value.toLowerCase();
+            const minPrice = parseFloat(document.getElementById('searchMinPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('searchMaxPrice').value) || Infinity;
+            const rooms = document.getElementById('searchRooms').value;
+
+            const filteredProperties = properties.filter(property => {
+                const matchesType = !type || property.type === type;
+                const matchesLocation = !location || property.location.toLowerCase().includes(location);
+                const matchesPrice = property.price >= minPrice && property.price <= maxPrice;
+                const matchesRooms = !rooms || property.rooms.toString() === rooms || (rooms === '4' && property.rooms >= 4);
+
+                return matchesType && matchesLocation && matchesPrice && matchesRooms;
+            });
+
+            displayProperties(filteredProperties);
+            
+            // Scroll to results
+            document.getElementById('listingsGrid').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show search results count
+            const resultsCount = filteredProperties.length;
+            showAlert('success', `${resultsCount} ta e'lon topildi`);
+        }
+
+        function scrollToSearch() {
+            document.getElementById('searchSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Utility functions
+        function selectRole(role) {
+            document.getElementById('userRole').value = role;
+            
+            // Update UI
+            const roleOptions = document.querySelectorAll('.role-option');
+            roleOptions.forEach(option => option.classList.remove('selected'));
+            event.target.closest('.role-option').classList.add('selected');
+            
+            // Show/hide company field
+            const companyGroup = document.getElementById('companyGroup');
+            if (role === 'broker') {
+                companyGroup.style.display = 'block';
+                document.getElementById('registerCompany').required = true;
+            } else {
+                companyGroup.style.display = 'none';
+                document.getElementById('registerCompany').required = false;
+            }
+        }
+
+        function showAlert(type, message) {
+            const alertElement = document.getElementById(type === 'success' ? 'successAlert' : 'errorAlert');
+            alertElement.textContent = message;
+            alertElement.style.display = 'block';
+            
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function formatDate(date) {
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return 'Bugun';
+            if (diffDays === 2) return 'Kecha';
+            if (diffDays <= 7) return `${diffDays} kun oldin`;
+            return date.toLocaleDateString('uz-UZ');
+        }
+
+        function getFavoriteProperties() {
+            // In a real app, this would come from user's saved favorites
+            return properties.slice(0, 2); // Mock data: return first 2 properties as favorites
+        }
+
+        function removeFromFavorites(propertyId) {
+            // In a real app, this would remove from user's favorites
+            showAlert('success', 'Saqlangan e\'lonlardan o\'chirildi');
+            updateDashboardContent();
+        }
+
+        function editProperty(propertyId) {
+            const property = properties.find(p => p.id === propertyId);
+            if (!property) return;
+
+            // Fill the form with existing property data
+            document.getElementById('propertyTitle').value = property.title;
+            document.getElementById('propertyType').value = property.type;
+            document.getElementById('propertyPrice').value = property.price;
+            document.getElementById('propertyLocation').value = property.location;
